@@ -14,7 +14,7 @@
 
 uint32_t getUdfpsZOrder(uint32_t z, bool touched) {
     if (touched) {
-        z |= FOD_PRESSED_LAYER_ZORDER;
+        z |= 0x20000000u;
     }
     return z;
 }
