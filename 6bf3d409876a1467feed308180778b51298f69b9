@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "26f1a9df_c1e56cfa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000703
+      },
+      "writtenOn": "2022-02-14T12:51:26Z",
+      "side": 1,
+      "message": "Android.mks are not related to my commit (and they\u0027re useless if there\u0027s nothing that uses Makefiles)",
+      "revId": "6bf3d409876a1467feed308180778b51298f69b9",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ]
+}
