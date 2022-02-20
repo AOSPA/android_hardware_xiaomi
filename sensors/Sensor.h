@@ -98,18 +98,24 @@ class OneShotSensor : public Sensor {
 class SysfsPollingOneShotSensor : public OneShotSensor {
   public:
     SysfsPollingOneShotSensor(int32_t sensorHandle, ISensorsEventCallback* callback,
+                              const std::string& pollPath, const std::string& enablePath,
+                              const std::string& name, const std::string& typeAsString,
+                              SensorType type);
+    SysfsPollingOneShotSensor(int32_t sensorHandle, ISensorsEventCallback* callback,
                               const std::string& pollPath, const std::string& name,
                               const std::string& typeAsString, SensorType type);
     virtual ~SysfsPollingOneShotSensor() override;
 
     virtual void activate(bool enable) override;
     virtual void activate(bool enable, bool notify, bool lock);
+    virtual void writeEnable(bool enable);
     virtual void setOperationMode(OperationMode mode) override;
     virtual std::vector<Event> readEvents() override;
     virtual void fillEventData(Event& event);
 
   protected:
     virtual void run() override;
+    std::ofstream mEnableStream;
 
   private:
     void interruptPoll();
