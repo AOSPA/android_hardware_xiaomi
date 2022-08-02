@@ -16,6 +16,24 @@
       "message": "there\u0027s a better solution \n\nhttps://github.com/mickaelmendes50/msm-4.19/commit/14051acd4712694a1053be3516e2a6ccc803b4ea",
       "revId": "39f206850acfbf747beb75f0607b38a0f9a72c4d",
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9ae65868_3e504363",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000737
+      },
+      "writtenOn": "2022-08-02T10:27:21Z",
+      "side": 1,
+      "message": "But in prebuilt kernel I don\u0027t use generated headers, it will cause build error for me.",
+      "parentUuid": "836ee5e5_0294b3d3",
+      "revId": "39f206850acfbf747beb75f0607b38a0f9a72c4d",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     }
   ]
 }
