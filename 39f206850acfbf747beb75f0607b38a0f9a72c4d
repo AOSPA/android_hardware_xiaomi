@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "836ee5e5_0294b3d3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000463
+      },
+      "writtenOn": "2022-08-02T01:17:47Z",
+      "side": 1,
+      "message": "there\u0027s a better solution \n\nhttps://github.com/mickaelmendes50/msm-4.19/commit/14051acd4712694a1053be3516e2a6ccc803b4ea",
+      "revId": "39f206850acfbf747beb75f0607b38a0f9a72c4d",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ]
+}
