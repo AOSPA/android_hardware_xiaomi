@@ -34,6 +34,24 @@
       "parentUuid": "836ee5e5_0294b3d3",
       "revId": "39f206850acfbf747beb75f0607b38a0f9a72c4d",
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c98db4f2_1f73bbe6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000579
+      },
+      "writtenOn": "2022-08-02T17:45:40Z",
+      "side": 1,
+      "message": "wouldn\u0027t you have device_kernel_headers then?, follow what qcom did for taro and add both to header_libs",
+      "parentUuid": "9ae65868_3e504363",
+      "revId": "39f206850acfbf747beb75f0607b38a0f9a72c4d",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     }
   ]
 }
