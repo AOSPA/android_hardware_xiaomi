@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5de51b8d_3eb9b9d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000737
+      },
+      "writtenOn": "2022-08-04T01:39:58Z",
+      "side": 1,
+      "message": "Omkar Your patch is causing this:https://katb.in/cidumonudoj\n\nbefore when I uploaded it was fine",
+      "revId": "d2541a5ff64a3a617f39d73a29accdee8c7fdcd5",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ]
+}
