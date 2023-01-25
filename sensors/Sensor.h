@@ -136,6 +136,22 @@ class UdfpsSensor : public SysfsPollingOneShotSensor {
 };
 #endif
 
+#ifdef USES_DOUBLE_TAP_SENSOR
+static const char* doubleTapPaths[] = {
+  "/sys/devices/platform/soc/884000.i2c/i2c-1/1-0038/double_tap_pressed",
+  NULL
+};
+
+class DoubleTapSensor : public SysfsPollingOneShotSensor {
+  public:
+    DoubleTapSensor(int32_t sensorHandle, ISensorsEventCallback* callback)
+        : SysfsPollingOneShotSensor(
+              sensorHandle, callback, GetPollPath(doubleTapPaths),
+              "Double Tap Sensor", "co.aospa.sensor.double_tap",
+              static_cast<SensorType>(static_cast<int32_t>(SensorType::DEVICE_PRIVATE_BASE) + 1)) {}
+};
+#endif
+
 }  // namespace implementation
 }  // namespace subhal
 }  // namespace V2_1
