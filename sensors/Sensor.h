@@ -119,6 +119,23 @@ class SysfsPollingOneShotSensor : public OneShotSensor {
     int mPollFd;
 };
 
+#ifdef USES_UDFPS_SENSOR
+static const char* udfpsStatePaths[] = {
+  "/sys/devices/virtual/touch/touch_dev/fod_press_status",
+  "/sys/touchpanel/fp_state",
+  NULL
+};
+
+class UdfpsSensor : public SysfsPollingOneShotSensor {
+  public:
+    UdfpsSensor(int32_t sensorHandle, ISensorsEventCallback* callback)
+        : SysfsPollingOneShotSensor(
+              sensorHandle, callback, GetPollPath(udfpsStatePaths),
+              "UDFPS Sensor", "co.aospa.sensor.udfps",
+              static_cast<SensorType>(static_cast<int32_t>(SensorType::DEVICE_PRIVATE_BASE) + 2)) {}
+};
+#endif
+
 }  // namespace implementation
 }  // namespace subhal
 }  // namespace V2_1
