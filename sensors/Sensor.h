@@ -22,6 +22,7 @@
 #include <unistd.h>
 
 #include <condition_variable>
+#include <fstream>
 #include <memory>
 #include <mutex>
 #include <thread>
@@ -91,17 +92,21 @@ class OneShotSensor : public Sensor {
     virtual Result flush() override { return Result::BAD_VALUE; }
 };
 
-class UdfpsSensor : public OneShotSensor {
+class SysfsPollingOneShotSensor : public OneShotSensor {
   public:
-    UdfpsSensor(int32_t sensorHandle, ISensorsEventCallback* callback);
-    virtual ~UdfpsSensor() override;
+    SysfsPollingOneShotSensor(int32_t sensorHandle, ISensorsEventCallback* callback,
+                              const std::string& pollPath, const std::string& name,
+                              const std::string& typeAsString, SensorType type);
+    virtual ~SysfsPollingOneShotSensor() override;
 
     virtual void activate(bool enable) override;
+    virtual void activate(bool enable, bool notify, bool lock);
     virtual void setOperationMode(OperationMode mode) override;
+    virtual std::vector<Event> readEvents() override;
+    virtual void fillEventData(Event& event);
 
   protected:
     virtual void run() override;
-    virtual std::vector<Event> readEvents();
 
   private:
     void interruptPoll();
@@ -109,9 +114,6 @@ class UdfpsSensor : public OneShotSensor {
     struct pollfd mPolls[2];
     int mWaitPipeFd[2];
     int mPollFd;
-
-    int mScreenX;
-    int mScreenY;
 };
 
 }  // namespace implementation
