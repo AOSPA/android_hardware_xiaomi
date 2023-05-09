@@ -41,6 +41,9 @@ namespace V2_1 {
 namespace subhal {
 namespace implementation {
 
+extern std::string GetPollPath(const char** array);
+extern bool IsFileValid(const std::string& file);
+
 class ISensorsEventCallback {
   public:
     virtual ~ISensorsEventCallback(){};

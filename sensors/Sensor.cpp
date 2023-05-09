@@ -344,6 +344,22 @@ void SysfsPollingOneShotSensor::fillEventData(Event& event) {
     event.u.data[1] = 0;
 }
 
+bool IsPathValid(const std::string& path) {
+  std::ifstream file(path);
+  return file.good();
+}
+
+std::string GetPollPath(const char** array) {
+  for (; *array != NULL; ++array) {
+    const char* path = *array;
+
+    if (IsPathValid(path))
+      return path;
+  }
+
+  return "";
+}
+
 }  // namespace implementation
 }  // namespace subhal
 }  // namespace V2_1
