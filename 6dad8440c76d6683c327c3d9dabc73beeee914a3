@@ -16,6 +16,23 @@
       "message": "Needs testing done before specifying as verified.",
       "revId": "6dad8440c76d6683c327c3d9dabc73beeee914a3",
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c4f2e98_4a2e0eb0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000890
+      },
+      "writtenOn": "2023-05-14T08:03:28Z",
+      "side": 1,
+      "message": "I\u0027ve had it tested by a different person and it seems to work fine for them hence marking as verified.",
+      "revId": "6dad8440c76d6683c327c3d9dabc73beeee914a3",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     }
   ]
 }
