@@ -5,4 +5,5 @@ service vendor.fps_hal /vendor/bin/hw/android.hardware.biometrics.fingerprint@2.
     class late_start
     user system
     group system input uhid
+    priority -20
     task_profiles ProcessCapacityHigh HighPerformance
