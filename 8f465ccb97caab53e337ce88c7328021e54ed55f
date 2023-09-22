@@ -16,6 +16,23 @@
       "message": "used by xiaomi 8550",
       "revId": "8f465ccb97caab53e337ce88c7328021e54ed55f",
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bffb48f5_3ca6f64c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000469
+      },
+      "writtenOn": "2023-09-22T17:16:12Z",
+      "side": 1,
+      "message": "Why not make this a soong config and set it from device tree, like old dt2w node",
+      "revId": "8f465ccb97caab53e337ce88c7328021e54ed55f",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     }
   ],
   "submitRequirementResults": []
