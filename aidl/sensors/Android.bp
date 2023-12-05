@@ -24,7 +24,7 @@ package {
 }
 
 cc_binary {
-    name: "android.hardware.sensors-service.multihal",
+    name: "android.hardware.sensors-service.xiaomi-multihal",
     vendor: true,
     relative_install_path: "hw",
     srcs: [
