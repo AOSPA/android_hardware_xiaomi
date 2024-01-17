@@ -17,7 +17,7 @@ class DolbyActivity : CollapsingToolbarBaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fragmentManager.beginTransaction()
+        supportFragmentManager.beginTransaction()
                 .replace(R.id.content_frame, DolbySettingsFragment(), TAG)
                 .commit()
     }

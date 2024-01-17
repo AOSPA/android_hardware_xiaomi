@@ -19,7 +19,7 @@ import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.Preference.OnPreferenceChangeListener
 import androidx.preference.PreferenceCategory
-import androidx.preference.PreferenceFragment
+import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import co.aospa.dolby.xiaomi.DolbyConstants
 import co.aospa.dolby.xiaomi.DolbyConstants.Companion.PREF_BASS
@@ -38,7 +38,7 @@ import co.aospa.dolby.xiaomi.DolbyController
 import co.aospa.dolby.xiaomi.R
 import com.android.settingslib.widget.MainSwitchPreference
 
-class DolbySettingsFragment : PreferenceFragment(),
+class DolbySettingsFragment : PreferenceFragmentCompat(),
     OnPreferenceChangeListener, OnCheckedChangeListener {
 
     private val switchBar by lazy {
@@ -76,8 +76,8 @@ class DolbySettingsFragment : PreferenceFragment(),
     }
     private var stereoPref: ListPreference? = null
 
-    private val dolbyController by lazy { DolbyController.getInstance(context) }
-    private val audioManager by lazy { context.getSystemService(AudioManager::class.java)!! }
+    private val dolbyController by lazy { DolbyController.getInstance(requireContext()) }
+    private val audioManager by lazy { requireContext().getSystemService(AudioManager::class.java)!! }
     private val handler = Handler()
 
     private var isOnSpeaker = true
@@ -102,16 +102,16 @@ class DolbySettingsFragment : PreferenceFragment(),
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         dlog(TAG, "onCreatePreferences")
-        addPreferencesFromResource(R.xml.dolby_settings)
+        setPreferencesFromResource(R.xml.dolby_settings, rootKey)
 
         stereoPref = findPreference<ListPreference>(PREF_STEREO)!!
-        if (!context.getResources().getBoolean(R.bool.dolby_stereo_widening_supported)) {
+        if (!resources.getBoolean(R.bool.dolby_stereo_widening_supported)) {
             settingsCategory.removePreference(stereoPref!!)
             stereoPref = null
         }
 
         val profile = dolbyController.profile
-        preferenceManager.preferenceDataStore = DolbyPreferenceStore(context).also {
+        preferenceManager.preferenceDataStore = DolbyPreferenceStore(requireContext()).also {
             it.profile = profile
         }
 
@@ -132,8 +132,8 @@ class DolbySettingsFragment : PreferenceFragment(),
             dolbyController.resetProfileSpecificSettings()
             updateProfileSpecificPrefs()
             Toast.makeText(
-                context,
-                context.getString(R.string.dolby_reset_profile_toast, profilePref.summary),
+                requireContext(),
+                getString(R.string.dolby_reset_profile_toast, profilePref.summary),
                 Toast.LENGTH_SHORT
             ).show()
             true
@@ -210,8 +210,8 @@ class DolbySettingsFragment : PreferenceFragment(),
     }
 
     private fun updateProfileSpecificPrefs() {
-        val unknownRes = context.getString(R.string.dolby_unknown)
-        val headphoneRes = context.getString(R.string.dolby_connect_headphones)
+        val unknownRes = getString(R.string.dolby_unknown)
+        val headphoneRes = getString(R.string.dolby_connect_headphones)
         val dsOn = dolbyController.dsOn
         val currentProfile = dolbyController.profile
 
