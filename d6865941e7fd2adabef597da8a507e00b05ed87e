@@ -107,6 +107,23 @@
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e7fadd7_da51df89",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000469
+      },
+      "writtenOn": "2024-03-27T15:00:54Z",
+      "side": 1,
+      "message": "this requires aosp powerhint handling (such as libperfmgr)",
+      "revId": "d6865941e7fd2adabef597da8a507e00b05ed87e",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2083f409_ba18af13",
