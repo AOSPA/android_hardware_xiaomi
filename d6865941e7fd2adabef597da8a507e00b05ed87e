@@ -124,6 +124,24 @@
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "94c97e6d_9b082197",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000469
+      },
+      "writtenOn": "2024-03-27T15:02:01Z",
+      "side": 1,
+      "message": "otherwise its a noop, qti powerhal doesnt handle interaction boost\n\nhttps://github.com/AOSPA/android_vendor_qcom-opensource_power/blob/0b1abe2cb99a772b2434b16cb0e80f25e922b412/Power.cpp#L148",
+      "parentUuid": "5e7fadd7_da51df89",
+      "revId": "d6865941e7fd2adabef597da8a507e00b05ed87e",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2083f409_ba18af13",
