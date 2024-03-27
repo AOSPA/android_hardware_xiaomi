@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "713584c7_1efe3eff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2024-03-27T13:05:39Z",
+      "side": 1,
+      "message": "Doesn\u0027t affect it in my testing. Been using it on lahaina and kona since 7 months",
+      "parentUuid": "533cb399_6cb8b8cb",
+      "revId": "d6865941e7fd2adabef597da8a507e00b05ed87e",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2083f409_ba18af13",
         "filename": "hidl/biometrics/fingerprint/Android.bp",
         "patchSetId": 2
