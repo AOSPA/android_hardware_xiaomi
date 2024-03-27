@@ -51,6 +51,24 @@
       "message": "How’s the power consumption with this?",
       "revId": "d6865941e7fd2adabef597da8a507e00b05ed87e",
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f113d556_e75aa90e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000488
+      },
+      "writtenOn": "2024-03-27T11:00:29Z",
+      "side": 1,
+      "message": "is it really faster tho cuz if you boost already, wouldn\u0027t this be no-op?",
+      "parentUuid": "b0436d89_5c2bc4b4",
+      "revId": "d6865941e7fd2adabef597da8a507e00b05ed87e",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     }
   ]
 }
