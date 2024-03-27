@@ -13,6 +13,10 @@
 #include <hidl/MQDescriptor.h>
 #include <hidl/Status.h>
 #include <log/log.h>
+#include <aidl/android/hardware/power/Boost.h>
+#include <aidl/android/hardware/power/IPower.h>
+#include <android/binder_manager.h>
+
 #include "UdfpsHandler.h"
 #include "fingerprint.h"
 
@@ -23,6 +27,8 @@ namespace fingerprint {
 namespace V2_3 {
 namespace implementation {
 
+using ::aidl::android::hardware::power::Boost;
+using ::aidl::android::hardware::power::IPower;
 using ::android::sp;
 using ::android::hardware::hidl_string;
 using ::android::hardware::hidl_vec;
@@ -74,6 +80,7 @@ struct BiometricsFingerprint : public IBiometricsFingerprint {
 
     std::mutex mClientCallbackMutex;
     sp<IBiometricsFingerprintClientCallback> mClientCallback;
+    std::shared_ptr<IPower> mPowerService;
     fingerprint_device_t* mDevice;
     bool mIsUdfps;
     UdfpsHandlerFactory* mUdfpsHandlerFactory;
