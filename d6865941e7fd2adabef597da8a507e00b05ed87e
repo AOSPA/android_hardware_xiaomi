@@ -87,6 +87,23 @@
       "parentUuid": "f113d556_e75aa90e",
       "revId": "d6865941e7fd2adabef597da8a507e00b05ed87e",
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2083f409_ba18af13",
+        "filename": "hidl/biometrics/fingerprint/Android.bp",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000737
+      },
+      "writtenOn": "2024-03-27T13:04:14Z",
+      "side": 1,
+      "message": "Use power-V3-ndk",
+      "revId": "d6865941e7fd2adabef597da8a507e00b05ed87e",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     }
   ]
 }
