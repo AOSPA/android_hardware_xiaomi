@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2022 The LineageOS Project
+ *               2024 Paranoid Android
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -20,9 +21,11 @@ class UdfpsHandler {
     virtual void onAcquired(int32_t result, int32_t vendorCode) = 0;
     virtual void cancel() = 0;
 
+#ifdef USES_ENROLL_METHODS
     virtual void preEnroll() = 0;
     virtual void enroll() = 0;
     virtual void postEnroll() = 0;
+#endif
 
 };
 
