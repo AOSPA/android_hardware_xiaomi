@@ -1,13 +1,36 @@
 //
 // Copyright (C) 2017 The Android Open Source Project
 //               2022 The LineageOS Project
+//               2024 Paranoid Android
 //
 // SPDX-License-Identifier: Apache-2.0
 //
 
+soong_config_module_type {
+    name: "xiaomi_fingerprint_hal_cc_defaults",
+    module_type: "cc_defaults",
+    config_namespace: "XIAOMI_FINGERPRINT",
+    bool_variables: ["USES_ENROLL_METHODS"],
+    properties: [
+        "cppflags",
+    ],
+}
+
+xiaomi_fingerprint_hal_cc_defaults {
+    name: "xiaomi_fingerprint_hal_defaults",
+    soong_config_variables: {
+        USES_ENROLL_METHODS: {
+            cppflags: ["-DUSES_ENROLL_METHODS"],
+        },
+    },
+}
+
 cc_binary {
     name: "android.hardware.biometrics.fingerprint@2.3-service.xiaomi",
-    defaults: ["hidl_defaults"],
+    defaults: [
+        "hidl_defaults",
+        "xiaomi_fingerprint_hal_cc_defaults",
+    ],
     init_rc: ["android.hardware.biometrics.fingerprint@2.3-service.xiaomi.rc"],
     vintf_fragments: ["android.hardware.biometrics.fingerprint@2.3-service.xiaomi.xml"],
     vendor: true,

@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2017 The Android Open Source Project
  *               2022 The LineageOS Project
+ *               2024 Paranoid Android
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -209,25 +210,31 @@ Return<uint64_t> BiometricsFingerprint::setNotify(
 }
 
 Return<uint64_t> BiometricsFingerprint::preEnroll() {
+#ifdef USES_ENROLL_METHODS
     if (mUdfpsHandler) {
         mUdfpsHandler->preEnroll();
     }
+#endif
     return mDevice->pre_enroll(mDevice);
 }
 
 Return<RequestStatus> BiometricsFingerprint::enroll(const hidl_array<uint8_t, 69>& hat,
                                                     uint32_t gid, uint32_t timeoutSec) {
+#ifdef USES_ENROLL_METHODS
     if (mUdfpsHandler) {
         mUdfpsHandler->enroll();
     }
+#endif
     const hw_auth_token_t* authToken = reinterpret_cast<const hw_auth_token_t*>(hat.data());
     return ErrorFilter(mDevice->enroll(mDevice, authToken, gid, timeoutSec));
 }
 
 Return<RequestStatus> BiometricsFingerprint::postEnroll() {
+#ifdef USES_ENROLL_METHODS
     if (mUdfpsHandler) {
         mUdfpsHandler->postEnroll();
     }
+#endif
     return ErrorFilter(mDevice->post_enroll(mDevice));
 }
 
