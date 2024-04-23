@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "962c1453_a7454129",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000469
+      },
+      "writtenOn": "2024-04-23T16:24:59Z",
+      "side": 1,
+      "message": "better remove sim_slot_mappings_json and make it a device specific rro",
+      "revId": "1ff81ad6def82143d3f6ddc927f1073b8a0306f9",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ]
+}
