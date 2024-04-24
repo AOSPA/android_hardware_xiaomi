@@ -138,6 +138,7 @@ class UdfpsSensor : public SysfsPollingOneShotSensor {
 
 #ifdef USES_DOUBLE_TAP_SENSOR
 static const char* doubleTapPaths[] = {
+  "/sys/class/touch/touch_dev/gesture_double_tap_state",
   "/sys/devices/platform/soc/884000.i2c/i2c-1/1-0038/double_tap_pressed",
   "/sys/devices/platform/soc/4a88000.i2c/i2c-1/1-0038/double_tap_pressed",
   NULL
