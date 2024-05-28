@@ -21,6 +21,13 @@
 #include <utils/SystemClock.h>
 
 #include <cmath>
+#include <fstream>
+
+template <typename T>
+static void set(const std::string& path, const T& value) {
+    std::ofstream file(path);
+    file << value;
+}
 
 static bool readBool(int fd, bool seek) {
     char c;
@@ -262,6 +269,10 @@ SysfsPollingOneShotSensor::~SysfsPollingOneShotSensor() {
 
 void SysfsPollingOneShotSensor::activate(bool enable, bool notify, bool lock) {
     std::unique_lock<std::mutex> runLock(mRunMutex, std::defer_lock);
+
+    if (!enablePath.empty()) {
+        set(enablePath, enable ? "1" : "0");
+    }
 
     if (lock) {
         runLock.lock();

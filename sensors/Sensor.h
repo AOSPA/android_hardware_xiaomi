@@ -144,7 +144,14 @@ static const char* doubleTapPaths[] = {
   NULL
 };
 
+static const char* doubleTapPathsEnable[] = {
+  "/sys/class/touch/touch_dev/gesture_double_tap_enable",
+  NULL
+};
+
 class DoubleTapSensor : public SysfsPollingOneShotSensor {
+  std::string enablePath = GetPollPath(doubleTapPathsEnable);
+
   public:
     DoubleTapSensor(int32_t sensorHandle, ISensorsEventCallback* callback)
         : SysfsPollingOneShotSensor(
@@ -162,7 +169,14 @@ static const char* singleTapPaths[] = {
   NULL
 };
 
+static const char* singleTapPathsEnable[] = {
+  "/sys/class/touch/touch_dev/gesture_single_tap_enable",
+  NULL
+};
+
 class SingleTapSensor : public SysfsPollingOneShotSensor {
+  std::string enablePath = GetPollPath(singleTapPathsEnable);
+
   public:
     SingleTapSensor(int32_t sensorHandle, ISensorsEventCallback* callback)
         : SysfsPollingOneShotSensor(
