@@ -261,6 +261,7 @@ SysfsPollingOneShotSensor::~SysfsPollingOneShotSensor() {
 }
 
 void SysfsPollingOneShotSensor::activate(bool enable, bool notify, bool lock) {
+    ALOGE("SysfsPollingOneShotSensor::activate(bool enable, bool notify, bool lock) | enable: %d", enable);
     std::unique_lock<std::mutex> runLock(mRunMutex, std::defer_lock);
 
     if (lock) {
@@ -283,6 +284,7 @@ void SysfsPollingOneShotSensor::activate(bool enable, bool notify, bool lock) {
 }
 
 void SysfsPollingOneShotSensor::activate(bool enable) {
+    ALOGE("SysfsPollingOneShotSensor::activate(bool enable) | enable: %d", enable);
     activate(enable, true, true);
 }
 
