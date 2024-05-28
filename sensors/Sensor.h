@@ -69,6 +69,12 @@ class Sensor {
     virtual std::vector<Event> readEvents();
     static void startThread(Sensor* sensor);
 
+    template <typename T>
+    void set(const std::string& path, const T& value) {
+      std::ofstream file(path);
+      file << value;
+    }
+
     bool isWakeUpSensor();
 
     bool mIsEnabled;
@@ -144,6 +150,11 @@ static const char* doubleTapPaths[] = {
   NULL
 };
 
+static const char* doubleTapPathsEnable[] = {
+  "/sys/class/touch/touch_dev/gesture_double_tap_enable",
+  NULL
+};
+
 class DoubleTapSensor : public SysfsPollingOneShotSensor {
   public:
     DoubleTapSensor(int32_t sensorHandle, ISensorsEventCallback* callback)
@@ -151,6 +162,21 @@ class DoubleTapSensor : public SysfsPollingOneShotSensor {
               sensorHandle, callback, GetPollPath(doubleTapPaths),
               "Double Tap Sensor", "co.aospa.sensor.double_tap",
               static_cast<SensorType>(static_cast<int32_t>(SensorType::DEVICE_PRIVATE_BASE) + 1)) {}
+
+    virtual void activate(bool enable) override {
+        const std::string& enablePath = GetPollPath(doubleTapPathsEnable);
+        if (!enablePath.empty()) {
+            set(enablePath, enable ? "1" : "0");
+        }
+        SysfsPollingOneShotSensor::activate(enable);
+    }
+    virtual void activate(bool enable, bool notify, bool lock) override {
+        const std::string& enablePath = GetPollPath(doubleTapPathsEnable);
+        if (!enablePath.empty()) {
+            set(enablePath, enable ? "1" : "0");
+        }
+        SysfsPollingOneShotSensor::activate(enable, notify, lock);
+    }
 };
 #endif
 
@@ -162,6 +188,11 @@ static const char* singleTapPaths[] = {
   NULL
 };
 
+static const char* singleTapPathsEnable[] = {
+  "/sys/class/touch/touch_dev/gesture_single_tap_enable",
+  NULL
+};
+
 class SingleTapSensor : public SysfsPollingOneShotSensor {
   public:
     SingleTapSensor(int32_t sensorHandle, ISensorsEventCallback* callback)
@@ -169,6 +200,21 @@ class SingleTapSensor : public SysfsPollingOneShotSensor {
               sensorHandle, callback, GetPollPath(singleTapPaths),
               "Single Tap Sensor", "co.aospa.sensor.single_tap",
               static_cast<SensorType>(static_cast<int32_t>(SensorType::DEVICE_PRIVATE_BASE) + 1)) {}
+
+    virtual void activate(bool enable) override {
+        const std::string& enablePath = GetPollPath(singleTapPathsEnable);
+        if (!enablePath.empty()) {
+            set(enablePath, enable ? "1" : "0");
+        }
+        SysfsPollingOneShotSensor::activate(enable);
+    }
+    virtual void activate(bool enable, bool notify, bool lock) override {
+        const std::string& enablePath = GetPollPath(singleTapPathsEnable);
+        if (!enablePath.empty()) {
+            set(enablePath, enable ? "1" : "0");
+        }
+        SysfsPollingOneShotSensor::activate(enable, notify, lock);
+    }
 };
 #endif
 
