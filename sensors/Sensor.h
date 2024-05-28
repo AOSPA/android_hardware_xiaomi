@@ -131,7 +131,7 @@ class UdfpsSensor : public SysfsPollingOneShotSensor {
     UdfpsSensor(int32_t sensorHandle, ISensorsEventCallback* callback)
         : SysfsPollingOneShotSensor(
               sensorHandle, callback, GetPollPath(udfpsStatePaths),
-              "UDFPS Sensor", "co.aospa.sensor.udfps",
+              NULL, "UDFPS Sensor", "co.aospa.sensor.udfps",
               static_cast<SensorType>(static_cast<int32_t>(SensorType::DEVICE_PRIVATE_BASE) + 2)) {}
 };
 #endif
@@ -144,12 +144,17 @@ static const char* doubleTapPaths[] = {
   NULL
 };
 
+static const char* doubleTapPathsEnable[] = {
+  "/sys/class/touch/touch_dev/gesture_double_tap_enable",
+  NULL
+};
+
 class DoubleTapSensor : public SysfsPollingOneShotSensor {
   public:
     DoubleTapSensor(int32_t sensorHandle, ISensorsEventCallback* callback)
         : SysfsPollingOneShotSensor(
               sensorHandle, callback, GetPollPath(doubleTapPaths),
-              "Double Tap Sensor", "co.aospa.sensor.double_tap",
+              GetPollPath(doubleTapPathsEnable), "Double Tap Sensor", "co.aospa.sensor.double_tap",
               static_cast<SensorType>(static_cast<int32_t>(SensorType::DEVICE_PRIVATE_BASE) + 1)) {}
 };
 #endif
@@ -162,12 +167,17 @@ static const char* singleTapPaths[] = {
   NULL
 };
 
+static const char* singleTapPathsEnable[] = {
+  "/sys/class/touch/touch_dev/gesture_single_tap_enable",
+  NULL
+};
+
 class SingleTapSensor : public SysfsPollingOneShotSensor {
   public:
     SingleTapSensor(int32_t sensorHandle, ISensorsEventCallback* callback)
         : SysfsPollingOneShotSensor(
               sensorHandle, callback, GetPollPath(singleTapPaths),
-              "Single Tap Sensor", "co.aospa.sensor.single_tap",
+              GetPollPath(singleTapPathsEnable), "Single Tap Sensor", "co.aospa.sensor.single_tap",
               static_cast<SensorType>(static_cast<int32_t>(SensorType::DEVICE_PRIVATE_BASE) + 1)) {}
 };
 #endif
