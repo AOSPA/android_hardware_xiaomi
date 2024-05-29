@@ -156,7 +156,7 @@ class DoubleTapSensor : public SysfsPollingOneShotSensor {
         : SysfsPollingOneShotSensor(
               sensorHandle, callback, GetPollPath(doubleTapPaths),
               "Double Tap Sensor", "co.aospa.sensor.double_tap",
-              static_cast<SensorType>(static_cast<int32_t>(SensorType::DEVICE_PRIVATE_BASE) + 1)) {}
+              static_cast<SensorType>(static_cast<int32_t>(SensorType::DEVICE_PRIVATE_BASE) + 3)) {}
 };
 #endif
 
