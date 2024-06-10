@@ -132,12 +132,17 @@ static const char* udfpsStatePaths[] = {
   NULL
 };
 
+static const char* udfpsPathsEnable[] = {
+  "/sys/class/touch/touch_dev/fod_longpress_gesture_enabled",
+  NULL
+};
+
 class UdfpsSensor : public SysfsPollingOneShotSensor {
   public:
     UdfpsSensor(int32_t sensorHandle, ISensorsEventCallback* callback)
         : SysfsPollingOneShotSensor(
               sensorHandle, callback, GetPollPath(udfpsStatePaths),
-              "UDFPS Sensor", "co.aospa.sensor.udfps",
+              GetPollPath(udfpsPathsEnable), "UDFPS Sensor", "co.aospa.sensor.udfps",
               static_cast<SensorType>(static_cast<int32_t>(SensorType::DEVICE_PRIVATE_BASE) + 2)) {}
 };
 #endif
