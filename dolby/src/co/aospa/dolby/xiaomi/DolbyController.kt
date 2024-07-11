@@ -242,11 +242,8 @@ internal class DolbyController private constructor(
         dlog(TAG, "setVolumeLevelerEnabled: $value")
         checkEffect()
         dolbyEffect.setDapParameter(DsParam.VOLUME_LEVELER_ENABLE, value, profile)
-        dolbyEffect.setDapParameter(
-            DsParam.VOLUME_LEVELER_AMOUNT,
-            if (value) VOLUME_LEVELER_AMOUNT else 0,
-            profile
-        )
+        // TODO: remove this in next version
+        dolbyEffect.setDapParameter(DsParam.VOLUME_LEVELER_AMOUNT, 0, profile)
     }
 
     fun getStereoWideningAmount(profile: Int = this.profile) =
@@ -279,7 +276,6 @@ internal class DolbyController private constructor(
     companion object {
         private const val TAG = "DolbyController"
         private const val EFFECT_PRIORITY = 100
-        private const val VOLUME_LEVELER_AMOUNT = 2
 
         @Volatile
         private var instance: DolbyController? = null
