@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9910b66b_cb4a6ab4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000974
+      },
+      "writtenOn": "2024-07-21T17:53:26Z",
+      "side": 1,
+      "message": "The chain should be needed for V",
+      "revId": "b725d9d0fae361f50056ea6c85dcbe8cac4260ae",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ]
+}
