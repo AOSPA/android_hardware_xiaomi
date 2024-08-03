@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f058139e_9bd3bd54",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000779
+      },
+      "writtenOn": "2024-08-03T08:50:21Z",
+      "side": 1,
+      "message": "PlainTooltipBox is deprecated. Errors with AOSP.",
+      "revId": "f0e9d6badc5a0fcd9cdda0d5759d3596a0dfec00",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ]
+}
