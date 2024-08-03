@@ -16,6 +16,24 @@
       "message": "PlainTooltipBox is deprecated. Errors with AOSP.",
       "revId": "f0e9d6badc5a0fcd9cdda0d5759d3596a0dfec00",
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c579a16_3d529381",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000469
+      },
+      "writtenOn": "2024-08-03T08:56:19Z",
+      "side": 1,
+      "message": "I\u0027m aware, although we are still on qpr1 so its necessary because older library version.",
+      "parentUuid": "f058139e_9bd3bd54",
+      "revId": "f0e9d6badc5a0fcd9cdda0d5759d3596a0dfec00",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     }
   ]
 }
