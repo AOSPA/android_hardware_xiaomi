@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7e6198f5_5b30c050",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000779
+      },
+      "writtenOn": "2024-08-03T11:46:33Z",
+      "side": 1,
+      "message": "Thanks. I have updated it to ToolTipBox and working fine.\nhttps://github.com/crdroidandroid/android_hardware_xiaomi/commits/14.0/\n\nOnly one issue left - pressing back icon on top bar of equalizer is not working.",
+      "revId": "2d228744b55eadee9d51df389d0e062a28267f48",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ]
+}
