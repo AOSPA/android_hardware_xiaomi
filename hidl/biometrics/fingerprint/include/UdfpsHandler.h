@@ -19,11 +19,6 @@ class UdfpsHandler {
 
     virtual void onAcquired(int32_t result, int32_t vendorCode) = 0;
     virtual void cancel() = 0;
-
-    virtual void preEnroll() = 0;
-    virtual void enroll() = 0;
-    virtual void postEnroll() = 0;
-
 };
 
 struct UdfpsHandlerFactory {
