@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d4699213_039f3dc5",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000974
+      },
+      "writtenOn": "2024-11-10T21:01:55Z",
+      "side": 1,
+      "message": "Is all you do rebase and sign-off?",
+      "revId": "2ea2afd78fb1ebb51fb78375a02e43bc0334c2f3",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ]
+}
