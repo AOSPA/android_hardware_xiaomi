@@ -36,13 +36,28 @@ Fingerprint::Fingerprint() {
     } else {
         std::string sensorModulesList = Fingerprint::cfg().get<std::string>("sensor_modules");
         std::vector<std::string> sensorModules = ::android::base::Split(sensorModulesList, ",");
-        for (const std::string& class_name : sensorModules) {
-            mDevice = openSensorHal(class_name.c_str());
+        for (const std::string& module : sensorModules) {
+            std::string class_name;
+            std::string class_module_id;
+
+            auto parts = ::android::base::Split(module, ":");
+
+            if (parts.size() == 2) {
+                class_name = parts[0];
+                class_module_id = parts[1];
+            } else {
+                class_name = module;
+                class_module_id = FINGERPRINT_HARDWARE_MODULE_ID;
+            }
+
+            mDevice = openSensorHal(class_name.c_str(), class_module_id.c_str());
             if (!mDevice) {
-                ALOGE("Can't open HAL module, class %s", class_name.c_str());
+                ALOGE("Can't open HAL module, class: %s, module_id: %s", class_name.c_str(),
+                      class_module_id.c_str());
                 continue;
             }
-            ALOGI("Opened fingerprint HAL, class %s", class_name.c_str());
+            ALOGI("Opened fingerprint HAL, class: %s, module_id: %s", class_name.c_str(),
+                  class_module_id.c_str());
             break;
         }
         if (!mDevice) {
@@ -99,11 +114,11 @@ Fingerprint::~Fingerprint() {
     mDevice = nullptr;
 }
 
-fingerprint_device_t* Fingerprint::openSensorHal(const char* class_name) {
+fingerprint_device_t* Fingerprint::openSensorHal(const char* class_name, const char* module_id) {
     const hw_module_t* hw_mdl = nullptr;
 
     ALOGD("Opening fingerprint hal library...");
-    if (hw_get_module_by_class(FINGERPRINT_HARDWARE_MODULE_ID, class_name, &hw_mdl) != 0) {
+    if (hw_get_module_by_class(module_id, class_name, &hw_mdl) != 0) {
         ALOGE("Can't open fingerprint HW Module");
         return nullptr;
     }

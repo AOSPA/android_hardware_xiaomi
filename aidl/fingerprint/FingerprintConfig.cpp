@@ -46,7 +46,7 @@ CREATE_GETTER_SETTER_WRAPPER(lockout_permanent_threshold, OptInt32)
 static Config::Data configData[] = {
         {NGS(type), &Config::parseString, ""},
         {NGS(sensor_modules), &Config::parseString,
-         "fortsense,fpc,fpc_fod,goodix,goodix_fod,goodix_fod6,silead,syna"},
+         "fortsense,fpc,fpc_fod,goodix,goodix:gf_fingerprint,goodix_fod,goodix_fod6,silead,syna"},
         {NGS(sensor_id), &Config::parseInt32, "0"},
         {NGS(sensor_location), &Config::parseString, ""},
         {NGS(sensor_strength), &Config::parseInt32, "2"},  // STRONG

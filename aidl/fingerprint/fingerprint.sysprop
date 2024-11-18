@@ -13,8 +13,8 @@ prop {
     api_name: "type"
 }
 
-# sensor modules (default: fortsense,fpc,fpc_fod,goodix,goodix_fod,goodix_fod6,silead,syna)
-#    module1,module2
+# sensor modules (default: fortsense,fpc,fpc_fod,goodix,goodix:gf_fingerprint,goodix_fod,goodix_fod6,silead,syna)
+#    module1,module2,module3:module_id3
 prop {
     prop_name: "persist.vendor.fingerprint.sensor_modules"
     type: String
