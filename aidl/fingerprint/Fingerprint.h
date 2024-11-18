@@ -42,7 +42,7 @@ class Fingerprint : public BnFingerprint {
 
   private:
     static fingerprint_device_t* openSensorHal(const char* class_name);
-    static SensorLocation getSensorLocation();
+    static std::vector<SensorLocation> getSensorLocations();
     static void notify(const fingerprint_msg_t* msg);
 
     std::shared_ptr<Session> mSession;
