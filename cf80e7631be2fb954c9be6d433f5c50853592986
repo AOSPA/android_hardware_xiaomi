@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1434da84_25971552",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000143
+      },
+      "writtenOn": "2024-11-29T16:09:32Z",
+      "side": 1,
+      "message": "none of our devices uses it anymore, so lets use a15 bringup as a chance to remove it",
+      "revId": "cf80e7631be2fb954c9be6d433f5c50853592986",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ]
+}
