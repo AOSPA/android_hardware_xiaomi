@@ -34,6 +34,24 @@
       "parentUuid": "b6fb67f3_48fec720",
       "revId": "ea1e64147bb9d079513dfcdd324986318e193fab",
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d9d28172_efb7efc2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000092
+      },
+      "writtenOn": "2024-12-06T15:15:29Z",
+      "side": 1,
+      "message": "sad, it\u0027s not working on sm8250",
+      "parentUuid": "98b91c82_a9d0f678",
+      "revId": "ea1e64147bb9d079513dfcdd324986318e193fab",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     }
   ]
 }
