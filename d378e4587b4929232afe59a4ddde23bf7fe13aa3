@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "edccf4f1_2f4145af",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000942
+      },
+      "writtenOn": "2024-12-18T18:05:58Z",
+      "side": 1,
+      "message": "https://review.lineageos.org/c/LineageOS/android_hardware_xiaomi/+/411429",
+      "revId": "d378e4587b4929232afe59a4ddde23bf7fe13aa3",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ]
+}
