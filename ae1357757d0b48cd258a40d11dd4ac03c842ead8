@@ -16,6 +16,24 @@
       "message": "non compat style switch preference looks good though",
       "revId": "ae1357757d0b48cd258a40d11dd4ac03c842ead8",
       "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a95c913d_ea7effb8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000469
+      },
+      "writtenOn": "2025-02-20T16:10:12Z",
+      "side": 1,
+      "message": "no thats just you being used to it. aka change aversion. we hated android 12 ui back when we were on android 11 and now this is all we have.",
+      "parentUuid": "c7711d8e_d9d3e28a",
+      "revId": "ae1357757d0b48cd258a40d11dd4ac03c842ead8",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
     }
   ]
 }
