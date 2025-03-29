@@ -112,16 +112,6 @@ class DolbySettingsFragment : PreferenceFragment(),
         switchBar.setChecked(dsOn)
 
         profilePref.onPreferenceChangeListener = this
-        profilePref.setEnabled(dsOn)
-        profilePref.apply {
-            if (entryValues.contains(profile.toString())) {
-                summary = "%s"
-                value = profile.toString()
-            } else {
-                summary = context.getString(R.string.dolby_unknown)
-            }
-        }
-
         hpVirtPref.onPreferenceChangeListener = this
         spkVirtPref.onPreferenceChangeListener = this
         stereoPref.onPreferenceChangeListener = this
@@ -203,7 +193,6 @@ class DolbySettingsFragment : PreferenceFragment(),
     override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
         dlog(TAG, "onCheckedChanged($isChecked)")
         dolbyController.dsOn = isChecked
-        profilePref.setEnabled(isChecked)
         updateProfileSpecificPrefs()
     }
 
@@ -222,6 +211,16 @@ class DolbySettingsFragment : PreferenceFragment(),
             TAG, "updateProfileSpecificPrefs: dsOn=$dsOn currentProfile=$currentProfile"
                     + " isOnSpeaker=$isOnSpeaker"
         )
+
+        profilePref.setEnabled(dsOn)
+        profilePref.apply {
+            if (entryValues.contains(currentProfile.toString())) {
+                summary = "%s"
+                value = currentProfile.toString()
+            } else {
+                summary = context.getString(R.string.dolby_unknown)
+            }
+        }
 
         val enable = dsOn && (currentProfile != -1)
         presetPref.setEnabled(enable)
