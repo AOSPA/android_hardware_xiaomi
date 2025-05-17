@@ -231,7 +231,7 @@ class DolbySettingsFragment : PreferenceFragment(),
         resetPref.setEnabled(enable)
         hpVirtPref.setEnabled(enable && !isOnSpeaker)
         stereoPref.setEnabled(enable && !isOnSpeaker)
-        bassPref.setEnabled(enable && !isOnSpeaker)
+        bassPref.setEnabled(enable)
 
         if (!enable) return
 
@@ -259,11 +259,11 @@ class DolbySettingsFragment : PreferenceFragment(),
 
         spkVirtPref.setChecked(dolbyController.getSpeakerVirtEnabled(currentProfile))
         volumePref.setChecked(dolbyController.getVolumeLevelerEnabled(currentProfile))
+        bassPref.setChecked(dolbyController.getBassEnhancerEnabled(currentProfile))
 
         // below prefs are not enabled on loudspeaker
         if (isOnSpeaker) {
             stereoPref.summary = headphoneRes
-            bassPref.summary = headphoneRes
             hpVirtPref.summary = headphoneRes
             return
         }
@@ -276,11 +276,6 @@ class DolbySettingsFragment : PreferenceFragment(),
             } else {
                 summary = unknownRes
             }
-        }
-
-        bassPref.apply {
-            setChecked(dolbyController.getBassEnhancerEnabled(currentProfile))
-            summary = null
         }
 
         hpVirtPref.apply {
