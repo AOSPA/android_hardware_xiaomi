@@ -25,6 +25,8 @@ internal class DolbyController private constructor(
     private var dolbyEffect = DolbyAudioEffect(EFFECT_PRIORITY, audioSession = 0)
     private val audioManager = context.getSystemService(AudioManager::class.java)!!
     private val handler = Handler(context.mainLooper)
+    private val stereoWideningSupported =
+        context.getResources().getBoolean(R.bool.dolby_stereo_widening_supported)
 
     // Restore current profile on every media session
     private val playbackCallback = object : AudioPlaybackCallback() {
@@ -271,11 +273,16 @@ internal class DolbyController private constructor(
     }
 
     fun getStereoWideningAmount(profile: Int = this.profile) =
-        dolbyEffect.getDapParameterInt(DsParam.STEREO_WIDENING_AMOUNT, profile).also {
-            dlog(TAG, "getStereoWideningAmount: $it")
+        if (!stereoWideningSupported) {
+            0
+        } else {
+            dolbyEffect.getDapParameterInt(DsParam.STEREO_WIDENING_AMOUNT, profile).also {
+                dlog(TAG, "getStereoWideningAmount: $it")
+            }
         }
 
     fun setStereoWideningAmount(value: Int, profile: Int = this.profile) {
+        if (!stereoWideningSupported) return
         dlog(TAG, "setStereoWideningAmount: $value")
         checkEffect()
         dolbyEffect.setDapParameter(DsParam.STEREO_WIDENING_AMOUNT, value, profile)

@@ -52,8 +52,8 @@ class DolbyConstants {
         )
 
         fun dlog(tag: String, msg: String) {
-            if (Log.isLoggable(TAG, Log.DEBUG)) {
-                Log.d(tag, msg)
+            if (Log.isLoggable(TAG, Log.DEBUG) || Log.isLoggable(tag, Log.DEBUG)) {
+                Log.d("$TAG-$tag", msg)
             }
         }
     }
