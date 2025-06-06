@@ -34,10 +34,9 @@ class DolbyIeqPreference(
 
     private fun getIeqIconResId(): Int =
         when (findIndexOfValue(value)) {
-            0 -> R.drawable.ic_ieq_off
             1 -> R.drawable.ic_ieq_balanced
             2 -> R.drawable.ic_ieq_warm
             3 -> R.drawable.ic_ieq_detailed
-            else -> 0 // should never hit this!
+            else -> R.drawable.ic_ieq_off
         }
 }
