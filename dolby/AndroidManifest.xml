@@ -24,7 +24,7 @@
         </receiver>
 
         <activity
-            android:name=".DolbyActivity"
+            android:name=".DolbySettingsActivity"
             android:label="@string/dolby_title"
             android:theme="@style/Theme.SubSettingsBase"
             android:exported="true">

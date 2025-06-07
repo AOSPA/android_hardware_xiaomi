@@ -28,6 +28,9 @@
     <string name="dolby_connect_headphones">Connect headphones</string>
     <string name="dolby_reset_profile">Reset to defaults</string>
     <string name="dolby_reset_profile_toast">Succesfully reset settings for %1$s profile</string>
+    <string name="dolby_reset_all">Reset profiles</string>
+    <string name="dolby_reset_all_message">This will reset all profiles to factory defaults.</string>
+    <string name="dolby_reset_all_toast">Succesfully reset all profiles</string>
 
     <!-- Dolby profiles -->
     <string name="dolby_profile_dynamic">Dynamic</string>

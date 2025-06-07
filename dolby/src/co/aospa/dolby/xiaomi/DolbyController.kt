@@ -193,11 +193,25 @@ internal class DolbyController private constructor(
         )[profileIndex]
     }
 
-    fun resetProfileSpecificSettings() {
-        dlog(TAG, "resetProfileSpecificSettings")
+    fun resetProfileSpecificSettings(profile: Int = this.profile) {
+        dlog(TAG, "resetProfileSpecificSettings($profile)")
         checkEffect()
-        dolbyEffect.resetProfileSpecificSettings()
+        dolbyEffect.resetProfileSpecificSettings(profile)
         context.deleteSharedPreferences("profile_$profile")
+    }
+
+    fun resetAllProfiles() {
+        dlog(TAG, "resetAllProfiles")
+        checkEffect()
+        // Reset profile-specific settings
+        context.resources.getStringArray(R.array.dolby_profile_values)
+            .map { it.toInt() }
+            .forEach { resetProfileSpecificSettings(it) }
+        // Set default dynamic profile
+        profile = 0
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+            .putString(DolbyConstants.PREF_PROFILE, "0")
+            .apply()
     }
 
     fun getPreset(profile: Int = this.profile): String {
