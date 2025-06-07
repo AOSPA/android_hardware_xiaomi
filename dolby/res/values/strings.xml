@@ -25,12 +25,12 @@
     <string name="dolby_dialogue_enhancer">Dialogue enhancer</string>
     <string name="dolby_spk_virtualizer">Speaker surround virtualizer</string>
     <string name="dolby_hp_virtualizer">Headphone surround virtualizer</string>
-    <string name="dolby_stereo_widening">Stereo widening</string>
     <string name="dolby_volume_leveler">Volume leveler</string>
     <string name="dolby_connect_headphones">Connect headphones</string>
     <string name="dolby_reset_all">Reset profiles</string>
     <string name="dolby_reset_all_message">This will reset all profiles to factory defaults.</string>
     <string name="dolby_reset_all_toast">Succesfully reset all profiles</string>
+    <string name="dolby_strength">Strength</string>
 
     <!-- Dolby profiles -->
     <string name="dolby_profile_dynamic">Dynamic</string>

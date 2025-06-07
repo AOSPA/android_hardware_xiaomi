@@ -21,10 +21,12 @@ import androidx.preference.Preference
 import androidx.preference.Preference.OnPreferenceChangeListener
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragment
+import androidx.preference.SeekBarPreference
 import androidx.preference.SwitchPreferenceCompat
 import co.aospa.dolby.xiaomi.DolbyConstants
 import co.aospa.dolby.xiaomi.DolbyConstants.Companion.PREF_BASS
 import co.aospa.dolby.xiaomi.DolbyConstants.Companion.PREF_DIALOGUE
+import co.aospa.dolby.xiaomi.DolbyConstants.Companion.PREF_DIALOGUE_AMOUNT
 import co.aospa.dolby.xiaomi.DolbyConstants.Companion.PREF_ENABLE
 import co.aospa.dolby.xiaomi.DolbyConstants.Companion.PREF_HP_VIRTUALIZER
 import co.aospa.dolby.xiaomi.DolbyConstants.Companion.PREF_IEQ
@@ -32,7 +34,7 @@ import co.aospa.dolby.xiaomi.DolbyConstants.Companion.PREF_PRESET
 import co.aospa.dolby.xiaomi.DolbyConstants.Companion.PREF_PROFILE
 import co.aospa.dolby.xiaomi.DolbyConstants.Companion.PREF_RESET
 import co.aospa.dolby.xiaomi.DolbyConstants.Companion.PREF_SPK_VIRTUALIZER
-import co.aospa.dolby.xiaomi.DolbyConstants.Companion.PREF_STEREO
+import co.aospa.dolby.xiaomi.DolbyConstants.Companion.PREF_STEREO_WIDENING
 import co.aospa.dolby.xiaomi.DolbyConstants.Companion.PREF_VOLUME
 import co.aospa.dolby.xiaomi.DolbyConstants.Companion.dlog
 import co.aospa.dolby.xiaomi.DolbyController
@@ -55,7 +57,10 @@ class DolbySettingsFragment : PreferenceFragment(),
         findPreference<DolbyIeqPreference>(PREF_IEQ)!!
     }
     private val dialoguePref by lazy {
-        findPreference<ListPreference>(PREF_DIALOGUE)!!
+        findPreference<SwitchPreferenceCompat>(PREF_DIALOGUE)!!
+    }
+    private val dialogueAmountPref by lazy {
+        findPreference<SeekBarPreference>(PREF_DIALOGUE_AMOUNT)!!
     }
     private val bassPref by lazy {
         findPreference<SwitchPreferenceCompat>(PREF_BASS)!!
@@ -78,7 +83,7 @@ class DolbySettingsFragment : PreferenceFragment(),
     private val advSettingsFooter by lazy {
         findPreference<Preference>("dolby_adv_settings_footer")!!
     }
-    private var stereoPref: ListPreference? = null
+    private var stereoPref: SeekBarPreference? = null
 
     private val dolbyController by lazy { DolbyController.getInstance(context) }
     private val audioManager by lazy { context.getSystemService(AudioManager::class.java)!! }
@@ -108,7 +113,7 @@ class DolbySettingsFragment : PreferenceFragment(),
         dlog(TAG, "onCreatePreferences")
         addPreferencesFromResource(R.xml.dolby_settings)
 
-        stereoPref = findPreference<ListPreference>(PREF_STEREO)!!
+        stereoPref = findPreference<SeekBarPreference>(PREF_STEREO_WIDENING)!!
         if (!context.getResources().getBoolean(R.bool.dolby_stereo_widening_supported)) {
             settingsCategory.removePreference(stereoPref!!)
             stereoPref = null
@@ -125,8 +130,17 @@ class DolbySettingsFragment : PreferenceFragment(),
         profilePref.onPreferenceChangeListener = this
         hpVirtPref.onPreferenceChangeListener = this
         spkVirtPref.onPreferenceChangeListener = this
-        stereoPref?.onPreferenceChangeListener = this
+        stereoPref?.apply {
+            onPreferenceChangeListener = this@DolbySettingsFragment
+            min = context.resources.getInteger(R.integer.stereo_widening_min)
+            max = context.resources.getInteger(R.integer.stereo_widening_max)
+        }
         dialoguePref.onPreferenceChangeListener = this
+        dialogueAmountPref.apply {
+            onPreferenceChangeListener = this@DolbySettingsFragment
+            min = context.resources.getInteger(R.integer.dialogue_enhancer_min)
+            max = context.resources.getInteger(R.integer.dialogue_enhancer_max)
+        }
         bassPref.onPreferenceChangeListener = this
         volumePref.onPreferenceChangeListener = this
         ieqPref.onPreferenceChangeListener = this
@@ -165,12 +179,16 @@ class DolbySettingsFragment : PreferenceFragment(),
                 dolbyController.setHeadphoneVirtEnabled(newValue as Boolean)
             }
 
-            PREF_STEREO -> {
-                dolbyController.setStereoWideningAmount(newValue.toString().toInt())
+            PREF_STEREO_WIDENING -> {
+                dolbyController.setStereoWideningAmount(newValue as Int)
             }
 
             PREF_DIALOGUE -> {
-                dolbyController.setDialogueEnhancerAmount(newValue.toString().toInt())
+                dolbyController.setDialogueEnhancerEnabled(newValue as Boolean)
+            }
+
+            PREF_DIALOGUE_AMOUNT -> {
+                dolbyController.setDialogueEnhancerAmount(newValue as Int)
             }
 
             PREF_BASS -> {
@@ -255,16 +273,8 @@ class DolbySettingsFragment : PreferenceFragment(),
             }
         }
 
-        val deValue = dolbyController.getDialogueEnhancerAmount(currentProfile).toString()
-        dialoguePref.apply {
-            if (entryValues.contains(deValue)) {
-                summary = "%s"
-                value = deValue
-            } else {
-                summary = unknownRes
-                dlog(TAG, "dialogue enhancer value $deValue unknown")
-            }
-        }
+        dialoguePref.isChecked = dolbyController.getDialogueEnhancerEnabled(currentProfile)
+        dialogueAmountPref.value = dolbyController.getDialogueEnhancerAmount(currentProfile)
 
         spkVirtPref.isChecked = dolbyController.getSpeakerVirtEnabled(currentProfile)
         volumePref.isChecked = dolbyController.getVolumeLevelerEnabled(currentProfile)
@@ -275,7 +285,6 @@ class DolbySettingsFragment : PreferenceFragment(),
                 isEnabled = false
                 summary = headphoneRes
             }
-            stereoPref?.summary = headphoneRes
             return
         }
 
@@ -285,16 +294,7 @@ class DolbySettingsFragment : PreferenceFragment(),
             summary = null
         }
 
-        val swValue = dolbyController.getStereoWideningAmount(currentProfile).toString()
-        stereoPref?.apply {
-            if (entryValues.contains(swValue)) {
-                summary = "%s"
-                value = swValue
-            } else {
-                summary = unknownRes
-                dlog(TAG, "stereo widening value $swValue unknown")
-            }
-        }
+        stereoPref?.value = dolbyController.getStereoWideningAmount(currentProfile)
     }
 
     companion object {
