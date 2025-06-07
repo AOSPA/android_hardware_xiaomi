@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2023-24 Paranoid Android
+     Copyright (C) 2023-25 Paranoid Android
      SPDX-License-Identifier: Apache-2.0
 -->
 <PreferenceScreen
@@ -14,6 +14,7 @@
 
     <ListPreference
         android:key="dolby_profile"
+        android:dependency="dolby_enable"
         android:entries="@array/dolby_profile_entries"
         android:entryValues="@array/dolby_profile_values"
         android:defaultValue="0"
@@ -23,7 +24,8 @@
 
     <PreferenceCategory
         android:key="dolby_category_settings"
-        android:title="@string/dolby_category_settings">
+        android:title="@string/dolby_category_settings"
+        android:dependency="dolby_enable">
 
         <Preference
             android:key="dolby_preset"
@@ -33,6 +35,17 @@
                 android:targetPackage="co.aospa.dolby.xiaomi"
                 android:targetClass="co.aospa.dolby.xiaomi.geq.EqualizerActivity" />
         </Preference>
+
+        <SwitchPreferenceCompat
+            android:key="dolby_bass"
+            android:title="@string/dolby_bass_enhancer" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="dolby_category_adv_settings"
+        android:title="@string/dolby_category_adv_settings"
+        android:dependency="dolby_enable">
 
         <co.aospa.dolby.xiaomi.preference.DolbyIeqPreference
             android:key="dolby_ieq"
@@ -62,17 +75,14 @@
             android:title="@string/dolby_dialogue_enhancer" />
 
         <SwitchPreferenceCompat
-            android:key="dolby_bass"
-            android:title="@string/dolby_bass_enhancer" />
-
-        <SwitchPreferenceCompat
             android:key="dolby_volume"
             android:title="@string/dolby_volume_leveler" />
 
-        <Preference
-            android:key="dolby_reset"
-            android:title="@string/dolby_reset_profile" />
-
     </PreferenceCategory>
+
+    <com.android.settingslib.widget.FooterPreference
+        android:key="dolby_adv_settings_footer"
+        android:title="@string/dolby_adv_settings_footer"
+        android:selectable="false" />
 
 </PreferenceScreen>

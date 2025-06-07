@@ -123,6 +123,14 @@ internal class DolbyController private constructor(
             prefs.getString(DolbyConstants.PREF_PRESET, getPreset(profile))!!,
             profile
         )
+        setBassEnhancerEnabled(
+            prefs.getBoolean(DolbyConstants.PREF_BASS, getBassEnhancerEnabled(profile)),
+            profile
+        )
+        if (profile == 0) {
+            // below settings are not applicable for dynamic
+            return
+        }
         setIeqPreset(
             prefs.getString(
                 DolbyConstants.PREF_IEQ,
@@ -150,10 +158,6 @@ internal class DolbyController private constructor(
                 DolbyConstants.PREF_DIALOGUE,
                 getDialogueEnhancerAmount(profile).toString()
             )!!.toInt(),
-            profile
-        )
-        setBassEnhancerEnabled(
-            prefs.getBoolean(DolbyConstants.PREF_BASS, getBassEnhancerEnabled(profile)),
             profile
         )
         setVolumeLevelerEnabled(

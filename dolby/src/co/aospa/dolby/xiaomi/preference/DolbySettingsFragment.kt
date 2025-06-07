@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023-24 Paranoid Android
+ * Copyright (C) 2023-25 Paranoid Android
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -15,6 +15,7 @@ import android.os.Handler
 import android.widget.CompoundButton
 import android.widget.CompoundButton.OnCheckedChangeListener
 import android.widget.Toast
+import androidx.core.os.postDelayed
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.Preference.OnPreferenceChangeListener
@@ -68,11 +69,14 @@ class DolbySettingsFragment : PreferenceFragment(),
     private val volumePref by lazy {
         findPreference<SwitchPreferenceCompat>(PREF_VOLUME)!!
     }
-    private val resetPref by lazy {
-        findPreference<Preference>(PREF_RESET)!!
-    }
     private val settingsCategory by lazy {
         findPreference<PreferenceCategory>("dolby_category_settings")!!
+    }
+    private val advSettingsCategory by lazy {
+        findPreference<PreferenceCategory>("dolby_category_adv_settings")!!
+    }
+    private val advSettingsFooter by lazy {
+        findPreference<Preference>("dolby_adv_settings_footer")!!
     }
     private var stereoPref: ListPreference? = null
 
@@ -110,9 +114,8 @@ class DolbySettingsFragment : PreferenceFragment(),
             stereoPref = null
         }
 
-        val profile = dolbyController.profile
         preferenceManager.preferenceDataStore = DolbyPreferenceStore(context).also {
-            it.profile = profile
+            it.profile = dolbyController.profile
         }
 
         val dsOn = dolbyController.dsOn
@@ -128,31 +131,21 @@ class DolbySettingsFragment : PreferenceFragment(),
         volumePref.onPreferenceChangeListener = this
         ieqPref.onPreferenceChangeListener = this
 
-        resetPref.setOnPreferenceClickListener {
-            dolbyController.resetProfileSpecificSettings()
-            updateProfileSpecificPrefs()
-            Toast.makeText(
-                context,
-                context.getString(R.string.dolby_reset_profile_toast, profilePref.summary),
-                Toast.LENGTH_SHORT
-            ).show()
-            true
-        }
-
         audioManager.registerAudioDeviceCallback(audioDeviceCallback, handler)
         updateSpeakerState()
-        updateProfileSpecificPrefs()
+        updateProfileSpecificPrefsImmediate()
     }
 
     override fun onDestroyView() {
         dlog(TAG, "onDestroyView")
         audioManager.unregisterAudioDeviceCallback(audioDeviceCallback)
+        handler.removeCallbacksAndMessages(null)
         super.onDestroyView()
     }
 
     override fun onResume() {
         super.onResume()
-        updateProfileSpecificPrefs()
+        updateProfileSpecificPrefsImmediate()
     }
 
     override fun onPreferenceChange(preference: Preference, newValue: Any): Boolean {
@@ -161,7 +154,6 @@ class DolbySettingsFragment : PreferenceFragment(),
             PREF_PROFILE -> {
                 val profile = newValue.toString().toInt()
                 dolbyController.profile = profile
-                (preferenceManager.preferenceDataStore as DolbyPreferenceStore).profile = profile
                 updateProfileSpecificPrefs()
             }
 
@@ -210,17 +202,28 @@ class DolbySettingsFragment : PreferenceFragment(),
     }
 
     private fun updateProfileSpecificPrefs() {
+        handler.postDelayed(100) { updateProfileSpecificPrefsImmediate() }
+    }
+
+    private fun updateProfileSpecificPrefsImmediate() {
+        if (context == null) return
+        if (!dolbyController.dsOn) {
+            dlog(TAG, "updateProfileSpecificPrefs: Dolby is off")
+            advSettingsCategory.isVisible = false
+            return
+        }
+
         val unknownRes = context.getString(R.string.dolby_unknown)
         val headphoneRes = context.getString(R.string.dolby_connect_headphones)
-        val dsOn = dolbyController.dsOn
         val currentProfile = dolbyController.profile
+        val isDynamicProfile = currentProfile == 0
+        (preferenceManager.preferenceDataStore as DolbyPreferenceStore).profile = currentProfile
 
         dlog(
-            TAG, "updateProfileSpecificPrefs: dsOn=$dsOn currentProfile=$currentProfile"
+            TAG, "updateProfileSpecificPrefs: currentProfile=$currentProfile"
                     + " isOnSpeaker=$isOnSpeaker"
         )
 
-        profilePref.setEnabled(dsOn)
         profilePref.apply {
             if (entryValues.contains(currentProfile.toString())) {
                 summary = "%s"
@@ -231,20 +234,15 @@ class DolbySettingsFragment : PreferenceFragment(),
             }
         }
 
-        val enable = dsOn && (currentProfile != -1)
-        presetPref.setEnabled(enable)
-        spkVirtPref.setEnabled(enable)
-        ieqPref.setEnabled(enable)
-        dialoguePref.setEnabled(enable)
-        volumePref.setEnabled(enable)
-        resetPref.setEnabled(enable)
-        hpVirtPref.setEnabled(enable && !isOnSpeaker)
-        stereoPref?.setEnabled(enable && !isOnSpeaker)
-        bassPref.setEnabled(enable)
-
-        if (!enable) return
+        // hide advanced settings on dynamic profile
+        advSettingsCategory.isVisible = !isDynamicProfile
+        advSettingsFooter.isVisible = isDynamicProfile
 
         presetPref.summary = dolbyController.getPresetName()
+        bassPref.isChecked = dolbyController.getBassEnhancerEnabled(currentProfile)
+
+        // below prefs are not visible on dynamic profile
+        if (isDynamicProfile) return
 
         val ieqValue = dolbyController.getIeqPreset(currentProfile)
         ieqPref.apply {
@@ -268,15 +266,23 @@ class DolbySettingsFragment : PreferenceFragment(),
             }
         }
 
-        spkVirtPref.setChecked(dolbyController.getSpeakerVirtEnabled(currentProfile))
-        volumePref.setChecked(dolbyController.getVolumeLevelerEnabled(currentProfile))
-        bassPref.setChecked(dolbyController.getBassEnhancerEnabled(currentProfile))
+        spkVirtPref.isChecked = dolbyController.getSpeakerVirtEnabled(currentProfile)
+        volumePref.isChecked = dolbyController.getVolumeLevelerEnabled(currentProfile)
 
         // below prefs are not enabled on loudspeaker
         if (isOnSpeaker) {
+            hpVirtPref.apply {
+                isEnabled = false
+                summary = headphoneRes
+            }
             stereoPref?.summary = headphoneRes
-            hpVirtPref.summary = headphoneRes
             return
+        }
+
+        hpVirtPref.apply {
+            isEnabled = true
+            isChecked = dolbyController.getHeadphoneVirtEnabled(currentProfile)
+            summary = null
         }
 
         val swValue = dolbyController.getStereoWideningAmount(currentProfile).toString()
@@ -288,11 +294,6 @@ class DolbySettingsFragment : PreferenceFragment(),
                 summary = unknownRes
                 dlog(TAG, "stereo widening value $swValue unknown")
             }
-        }
-
-        hpVirtPref.apply {
-            setChecked(dolbyController.getHeadphoneVirtEnabled(currentProfile))
-            summary = null
         }
     }
 
