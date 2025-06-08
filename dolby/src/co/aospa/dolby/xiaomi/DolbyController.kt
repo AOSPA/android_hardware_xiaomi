@@ -93,12 +93,6 @@ internal class DolbyController private constructor(
         }
 
     init {
-        dlog(TAG, "initialized")
-    }
-
-    fun onBootCompleted() {
-        dlog(TAG, "onBootCompleted")
-
         // Restore our main settings
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         dsOn = prefs.getBoolean(DolbyConstants.PREF_ENABLE, true)
@@ -114,6 +108,15 @@ internal class DolbyController private constructor(
 
         // Finally restore the current profile.
         setCurrentProfile()
+
+        dlog(TAG, "initialized")
+    }
+
+    fun onBootCompleted () {
+        dlog(TAG, "onBootCompleted()")
+
+        // Migrate presets from credential protected storage if needed
+        maybeMigratePresets()
     }
 
     private fun restoreSettings(profile: Int) {
@@ -171,6 +174,25 @@ internal class DolbyController private constructor(
             prefs.getBoolean(DolbyConstants.PREF_VOLUME, getVolumeLevelerEnabled(profile)),
             profile
         )
+    }
+
+    private fun maybeMigratePresets() {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        if (prefs.getBoolean(PREF_KEY_PRESETS_MIGRATED, false)) {
+            return
+        }
+        val ceContext = context.createCredentialProtectedStorageContext()
+        val cePrefs = ceContext.getSharedPreferences(PREF_PRESETS, Context.MODE_PRIVATE)
+        if (cePrefs.all.isEmpty()) {
+            dlog(TAG, "no presets to migrate")
+            return
+        }
+        if (context.moveSharedPreferencesFrom(ceContext, PREF_PRESETS)) {
+            prefs.edit().putBoolean(PREF_KEY_PRESETS_MIGRATED, true).apply()
+            dlog(TAG, "presets migrated successfully")
+        } else {
+            Log.w(TAG, "failed to migrate presets")
+        }
     }
 
     private fun checkEffect() {
@@ -349,6 +371,8 @@ internal class DolbyController private constructor(
     companion object {
         private const val TAG = "DolbyController"
         private const val EFFECT_PRIORITY = 100
+        private const val PREF_PRESETS = "presets"
+        private const val PREF_KEY_PRESETS_MIGRATED = "presets_migrated"
 
         @Volatile
         private var instance: DolbyController? = null

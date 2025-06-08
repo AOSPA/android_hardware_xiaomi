@@ -17,11 +17,15 @@ class BootCompletedReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         Log.d(TAG, "Received intent: ${intent.action}")
-        if (intent.action != Intent.ACTION_BOOT_COMPLETED) {
-            return
+        when (intent.action) {
+            Intent.ACTION_LOCKED_BOOT_COMPLETED -> {
+                // we perform everything in the initializer
+                DolbyController.getInstance(context)
+            }
+            Intent.ACTION_BOOT_COMPLETED -> {
+                DolbyController.getInstance(context).onBootCompleted()
+            }
+            else -> Log.e(TAG, "unhandled intent action")
         }
-
-        Log.i(TAG, "Boot completed, starting dolby")
-        DolbyController.getInstance(context).onBootCompleted()
     }
 }
