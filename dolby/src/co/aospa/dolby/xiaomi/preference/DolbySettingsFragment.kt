@@ -71,9 +71,6 @@ class DolbySettingsFragment : PreferenceFragment(),
     private val spkVirtPref by lazy {
         findPreference<SwitchPreferenceCompat>(PREF_SPK_VIRTUALIZER)!!
     }
-    private val volumePref by lazy {
-        findPreference<SwitchPreferenceCompat>(PREF_VOLUME)!!
-    }
     private val settingsCategory by lazy {
         findPreference<PreferenceCategory>("dolby_category_settings")!!
     }
@@ -83,6 +80,7 @@ class DolbySettingsFragment : PreferenceFragment(),
     private val advSettingsFooter by lazy {
         findPreference<Preference>("dolby_adv_settings_footer")!!
     }
+    private var volumePref: SwitchPreferenceCompat? = null
     private var stereoPref: SeekBarPreference? = null
 
     private val dolbyController by lazy { DolbyController.getInstance(context) }
@@ -114,9 +112,15 @@ class DolbySettingsFragment : PreferenceFragment(),
         addPreferencesFromResource(R.xml.dolby_settings)
 
         stereoPref = findPreference<SeekBarPreference>(PREF_STEREO_WIDENING)!!
-        if (!context.getResources().getBoolean(R.bool.dolby_stereo_widening_supported)) {
+        if (!context.resources.getBoolean(R.bool.dolby_stereo_widening_supported)) {
             settingsCategory.removePreference(stereoPref!!)
             stereoPref = null
+        }
+
+        volumePref = findPreference<SwitchPreferenceCompat>(PREF_VOLUME)!!
+        if (!context.resources.getBoolean(R.bool.dolby_volume_leveler_supported)) {
+            advSettingsCategory.removePreference(volumePref!!)
+            volumePref = null
         }
 
         preferenceManager.preferenceDataStore = DolbyPreferenceStore(context).also {
@@ -142,7 +146,7 @@ class DolbySettingsFragment : PreferenceFragment(),
             max = context.resources.getInteger(R.integer.dialogue_enhancer_max)
         }
         bassPref.onPreferenceChangeListener = this
-        volumePref.onPreferenceChangeListener = this
+        volumePref?.onPreferenceChangeListener = this
         ieqPref.onPreferenceChangeListener = this
 
         audioManager.registerAudioDeviceCallback(audioDeviceCallback, handler)
@@ -277,7 +281,7 @@ class DolbySettingsFragment : PreferenceFragment(),
         dialogueAmountPref.value = dolbyController.getDialogueEnhancerAmount(currentProfile)
 
         spkVirtPref.isChecked = dolbyController.getSpeakerVirtEnabled(currentProfile)
-        volumePref.isChecked = dolbyController.getVolumeLevelerEnabled(currentProfile)
+        volumePref?.isChecked = dolbyController.getVolumeLevelerEnabled(currentProfile)
 
         // below prefs are not enabled on loudspeaker
         if (isOnSpeaker) {

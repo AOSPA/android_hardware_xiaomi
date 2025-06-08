@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2023-24 Paranoid Android
+ * Copyright (C) 2023-25 Paranoid Android
  *
  * SPDX-License-Identifier: Apache-2.0
  */
@@ -27,6 +27,8 @@ internal class DolbyController private constructor(
     private val handler = Handler(context.mainLooper)
     private val stereoWideningSupported =
         context.getResources().getBoolean(R.bool.dolby_stereo_widening_supported)
+    private val volumeLevelerSupported =
+        context.getResources().getBoolean(R.bool.dolby_volume_leveler_supported)
 
     // Restore current profile on every media session
     private val playbackCallback = object : AudioPlaybackCallback() {
@@ -130,6 +132,12 @@ internal class DolbyController private constructor(
             prefs.getBoolean(DolbyConstants.PREF_BASS, getBassEnhancerEnabled(profile)),
             profile
         )
+        setVolumeLevelerEnabled(
+            // force disable if unsupported, else force enable on dynamic profile
+            volumeLevelerSupported && (profile == 0 ||
+                prefs.getBoolean(DolbyConstants.PREF_VOLUME, getVolumeLevelerEnabled(profile))),
+            profile
+        )
         if (profile == 0) {
             // below settings are not applicable for dynamic
             return
@@ -168,10 +176,6 @@ internal class DolbyController private constructor(
                 DolbyConstants.PREF_DIALOGUE_AMOUNT,
                 getDialogueEnhancerAmount(profile)
             )!!.toInt(),
-            profile
-        )
-        setVolumeLevelerEnabled(
-            prefs.getBoolean(DolbyConstants.PREF_VOLUME, getVolumeLevelerEnabled(profile)),
             profile
         )
     }
