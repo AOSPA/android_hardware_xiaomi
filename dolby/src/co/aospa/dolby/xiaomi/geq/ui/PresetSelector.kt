@@ -61,7 +61,7 @@ fun PresetSelector(viewModel: EqualizerViewModel) {
                 .weight(1f)
         ) {
             TextField(
-                value = currentPreset.name,
+                value = currentPreset.name ?: stringResource(id = R.string.dolby_preset_custom),
                 onValueChange = { },
                 readOnly = true,
                 label = {
@@ -86,7 +86,7 @@ fun PresetSelector(viewModel: EqualizerViewModel) {
             ) {
                 presets.forEach { preset ->
                     DropdownMenuItem(
-                        text = { Text(text = preset.name) },
+                        text = { Text(text = preset.name!!) },
                         onClick = {
                             viewModel.setPreset(preset)
                             expanded = false
@@ -147,7 +147,7 @@ fun PresetSelector(viewModel: EqualizerViewModel) {
     if (showRenamePresetDialog) {
         PresetNameDialog(
             title = stringResource(id = R.string.dolby_geq_rename_preset),
-            presetName = currentPreset.name,
+            presetName = currentPreset.name!!,
             onPresetNameSet = {
                 return@PresetNameDialog viewModel.renamePreset(
                     preset = currentPreset,

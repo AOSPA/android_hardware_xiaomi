@@ -27,10 +27,10 @@ class EqualizerViewModel(
     private val repository: EqualizerRepository
 ) : ViewModel() {
 
-    private val _presets = MutableStateFlow(repository.builtInPresets)
+    private val _presets = MutableStateFlow<List<Preset>>(repository.builtInPresets)
     val presets = _presets.asStateFlow()
 
-    private val _preset = MutableStateFlow(repository.defaultPreset)
+    private val _preset = MutableStateFlow<Preset>(repository.defaultPreset)
     val preset = _preset.asStateFlow()
 
     private var presetRestored = false
@@ -52,10 +52,7 @@ class EqualizerViewModel(
                     val bandGains = repository.getBandGains()
                     _preset.value = _presets.value.find {
                         bandGains == it.bandGains
-                    } ?: Preset(
-                        name = "Custom",
-                        bandGains = bandGains
-                    )
+                    } ?: Preset(bandGains = bandGains)
                     dlog(TAG, "restored preset: ${_preset.value}")
                     presetRestored = true
                 }
@@ -101,7 +98,8 @@ class EqualizerViewModel(
         dlog(TAG, "setGain($index, $gain)")
         _preset.value = _preset.value.run {
             copy(
-                name = if (!isUserDefined) "Custom" else name,
+                // if we're modifying predefined preset, set name to null so UI shows "Custom"
+                name = if (!isUserDefined) null else name,
                 bandGains = bandGains
                     .toMutableList()
                     // create a new object to ensure the flow emits an update.
@@ -117,7 +115,7 @@ class EqualizerViewModel(
         // Ensure we don't have another preset with the same name
         return if (
             _presets.value
-            .any { it.name.equals(name.trim(), ignoreCase = true) }
+            .any { it.name!!.equals(name.trim(), ignoreCase = true) }
         ) {
             PresetNameValidationError.NAME_EXISTS
         } else if (name.length > 50) {

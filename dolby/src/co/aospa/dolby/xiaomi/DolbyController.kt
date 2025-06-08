@@ -264,14 +264,14 @@ internal class DolbyController private constructor(
     }
 
     fun getPresetName(): String {
+        val preset = getPreset()
         val presets = context.resources.getStringArray(R.array.dolby_preset_values)
-        val presetIndex = presets.indexOf(getPreset())
-        return if (presetIndex == -1) {
-            "Custom"
+        val userPresets = context.getSharedPreferences(PREF_PRESETS, Context.MODE_PRIVATE)
+        return if (presets.contains(preset)) {
+            context.resources.getStringArray(R.array.dolby_preset_entries)[presets.indexOf(preset)]
         } else {
-            context.resources.getStringArray(
-                R.array.dolby_preset_entries
-            )[presetIndex]
+            userPresets.all.entries.firstOrNull { it.value == preset }?.key
+                ?: context.getString(R.string.dolby_preset_custom)
         }
     }
 
