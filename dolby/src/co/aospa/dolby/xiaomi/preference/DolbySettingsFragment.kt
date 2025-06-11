@@ -241,10 +241,7 @@ class DolbySettingsFragment : PreferenceFragment(),
         val isDynamicProfile = currentProfile == 0
         (preferenceManager.preferenceDataStore as DolbyPreferenceStore).profile = currentProfile
 
-        dlog(
-            TAG, "updateProfileSpecificPrefs: currentProfile=$currentProfile"
-                    + " isOnSpeaker=$isOnSpeaker"
-        )
+        dlog(TAG, "updateProfileSpecificPrefs: currentProfile=$currentProfile")
 
         profilePref.apply {
             if (entryValues.contains(currentProfile.toString())) {
@@ -279,25 +276,9 @@ class DolbySettingsFragment : PreferenceFragment(),
 
         dialoguePref.isChecked = dolbyController.getDialogueEnhancerEnabled(currentProfile)
         dialogueAmountPref.value = dolbyController.getDialogueEnhancerAmount(currentProfile)
-
         spkVirtPref.isChecked = dolbyController.getSpeakerVirtEnabled(currentProfile)
         volumePref?.isChecked = dolbyController.getVolumeLevelerEnabled(currentProfile)
-
-        // below prefs are not enabled on loudspeaker
-        if (isOnSpeaker) {
-            hpVirtPref.apply {
-                isEnabled = false
-                summary = headphoneRes
-            }
-            return
-        }
-
-        hpVirtPref.apply {
-            isEnabled = true
-            isChecked = dolbyController.getHeadphoneVirtEnabled(currentProfile)
-            summary = null
-        }
-
+        hpVirtPref.isChecked = dolbyController.getHeadphoneVirtEnabled(currentProfile)
         stereoPref?.value = dolbyController.getStereoWideningAmount(currentProfile)
     }
 
