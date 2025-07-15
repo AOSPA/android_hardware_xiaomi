@@ -1,0 +1,18 @@
+//
+// Copyright (C) 2024 The LineageOS Project
+//           (C) 2026 Paranoid Android
+//
+// SPDX-License-Identifier: Apache-2.0
+//
+
+cc_library_shared {
+    name: "libshim_dolby",
+    srcs: ["libshim_dolby.cpp"],
+    compile_multilib: "64",
+    shared_libs: [
+        "liblog",
+        "libdl",
+        "libc",
+    ],
+    vendor: true,
+}
