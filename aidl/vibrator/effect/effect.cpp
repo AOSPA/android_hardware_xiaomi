@@ -125,26 +125,30 @@ static const struct effect_stream primitives[] = {
     },
 };
 
-// Array containing the paths to fifo data in vendor.
+// Array containing the names of fifo data in vendor/odm.
 // The position in the array must match the effect id.
-static const std::string fifo_data_paths[] = {
-    "/vendor/firmware/0_click_P_RTP.bin",
-    "/vendor/firmware/1_doubelClick_P_RTP.bin",
-    "/vendor/firmware/2_tick_P_RTP.bin",
-    "/vendor/firmware/3_thud_P_RTP.bin",
-    "/vendor/firmware/4_pop_P_RTP.bin",
-    "/vendor/firmware/5_heavyClick_P_RTP.bin",
+static const std::string fifo_filenames[] = {
+    "0_click_P_RTP.bin",
+    "1_doubelClick_P_RTP.bin",
+    "2_tick_P_RTP.bin",
+    "3_thud_P_RTP.bin",
+    "4_pop_P_RTP.bin",
+    "5_heavyClick_P_RTP.bin",
 };
 
 int create_double_click(effect_stream *effect) {
-    const char *path = fifo_data_paths[0].c_str();
-    std::ifstream data;
+    std::string path = "/odm/firmware/" + fifo_filenames[0];
     struct stat file_stat;
     int size = 0;
-    int rc = stat(path, &file_stat);
+    int rc = stat(path.c_str(), &file_stat);
+
+    if (rc != 0) {
+        path = "/vendor/firmware/" + fifo_filenames[0];
+        rc = stat(path.c_str(), &file_stat);
+    }
 
     if (rc) {
-        ALOGE("Could not open %s", path);
+        ALOGE("Could not open %s", path.c_str());
         return rc;
     } else {
         size = file_stat.st_size;
@@ -157,7 +161,7 @@ int create_double_click(effect_stream *effect) {
     // slot of the array contains one byte of the fifo data from vendor.
     int8_t *custom_data = new int8_t[effect->length];
 
-    data.open(path, std::ios::in | std::ios::binary);
+    std::ifstream data(path, std::ios::in | std::ios::binary);
     data.read(reinterpret_cast<char *>(custom_data), size);
     data.close();
 
@@ -176,28 +180,34 @@ int create_double_click(effect_stream *effect) {
 }
 
 int parse_custom_data(effect_stream *effect) {
-    const char *path = fifo_data_paths[effect->effect_id].c_str();
+    const std::string filename = fifo_filenames[effect->effect_id];
+    std::string path = "/odm/firmware/" + filename;
     std::ifstream data;
     struct stat file_stat;
     int rc = 0;
 
-    ALOGI("Parsing custom fifo data for effect %d from path %s",
-            effect->effect_id, path);
+    rc = stat(path.c_str(), &file_stat);
+    if (rc != 0) {
+        path = "/vendor/firmware/" + filename;
+        rc = stat(path.c_str(), &file_stat);
+    }
 
-    rc = stat(path, &file_stat);
+    ALOGI("Parsing custom fifo data for effect %d from path %s",
+            effect->effect_id, path.c_str());
+
     if (rc && effect->effect_id != 0) {
         if (effect->effect_id == 1 /* double click */) {
-            ALOGI("Could not open %s, attempting to create from click", path);
+            ALOGI("Could not open %s, attempting to create from click", path.c_str());
             return create_double_click(effect);
         }
-        ALOGI("Could not open %s, falling back to click", path);
-        path = fifo_data_paths[0].c_str();
-        rc = stat(path, &file_stat);
+        ALOGI("Could not open %s, falling back to click", path.c_str());
+        path = "/vendor/firmware/" + fifo_filenames[0];
+        rc = stat(path.c_str(), &file_stat);
     }
     if (!rc) {
         effect->length = file_stat.st_size;
     } else {
-        ALOGE("Could not open %s", path);
+        ALOGE("Could not open %s", path.c_str());
         return rc;
     }
 
