@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ea394687_4460c4a0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000974
+      },
+      "writtenOn": "2025-08-24T17:02:46Z",
+      "side": 1,
+      "message": "Why can\u0027t you \"provide the original libs anymore\"? This patch was needed on Lineage because of the charter requirement, what requirement does AOSPA have?",
+      "revId": "f5e0814b1096c2a2c087a904438026e2ca275297",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
