@@ -15,7 +15,8 @@
         android:label="@string/dolby_title"
         android:persistent="true"
         android:directBootAware="true"
-        android:defaultToDeviceProtectedStorage="true">
+        android:defaultToDeviceProtectedStorage="true"
+        android:theme="@style/Theme.SubSettingsBase.Expressive">
 
         <receiver
             android:name=".BootCompletedReceiver"
@@ -29,7 +30,6 @@
         <activity
             android:name=".DolbySettingsActivity"
             android:label="@string/dolby_title"
-            android:theme="@style/Theme.SubSettingsBase"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.android.settings.action.IA_SETTINGS" />
@@ -53,7 +53,6 @@
         <activity
             android:name=".geq.EqualizerActivity"
             android:label="@string/dolby_preset"
-            android:theme="@style/Theme.SubSettingsBase"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -79,4 +78,3 @@
 
     </application>
 </manifest>
-
