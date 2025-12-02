@@ -13,7 +13,8 @@
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="false"
         android:label="@string/dolby_title"
-        android:persistent="true">
+        android:persistent="true"
+        android:theme="@style/Theme.SubSettingsBase.Expressive">
 
         <receiver
             android:name=".BootCompletedReceiver"
@@ -26,7 +27,6 @@
         <activity
             android:name=".DolbyActivity"
             android:label="@string/dolby_title"
-            android:theme="@style/Theme.SubSettingsBase"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.android.settings.action.IA_SETTINGS" />
@@ -50,7 +50,6 @@
         <activity
             android:name=".geq.EqualizerActivity"
             android:label="@string/dolby_preset"
-            android:theme="@style/Theme.SubSettingsBase"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
