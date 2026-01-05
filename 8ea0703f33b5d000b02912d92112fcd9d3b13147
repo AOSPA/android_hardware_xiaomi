@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3fdf0133_a3ddc278",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000579
+      },
+      "writtenOn": "2026-01-05T06:54:08Z",
+      "side": 1,
+      "message": "```suggestion\nThis Interface Needed for parts fragment to make working custom saturation Slider instead of using lineage livedisplay hal.\n```",
+      "range": {
+        "startLine": 9,
+        "startChar": 99,
+        "endLine": 9,
+        "endChar": 105
+      },
+      "revId": "8ea0703f33b5d000b02912d92112fcd9d3b13147",
+      "serverId": "3162e3d8-d894-470e-abd9-724f7b0effad"
+    }
+  ]
+}
