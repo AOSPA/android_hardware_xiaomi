@@ -47,7 +47,7 @@ extern void TryOpenStream(std::ofstream& mEnableStream, const std::string& enabl
 
 class ISensorsEventCallback {
   public:
-    virtual ~ISensorsEventCallback(){};
+    virtual ~ISensorsEventCallback() {};
     virtual void postEvents(const std::vector<Event>& events, bool wakeup) = 0;
 };
 
